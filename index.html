@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fiorella</title>
+    <title>Fiorella - Login</title>
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -16,230 +16,79 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #d2e4ea;
+            background-color: #f3e8f6;
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col">
+<body class="min-h-screen flex items-center justify-center p-4">
 
-    <!-- Cabeçalho (100% Responsivo: Mantém menu, busca e carrinho visíveis em qualquer tela) -->
-    <!-- Cabeçalho (100% Responsivo) -->
-    <header class="bg-[#7d487b] px-3 sm:px-8 py-3 sm:py-5 shadow-md flex flex-col md:flex-row items-center justify-between gap-3 sticky top-0 z-50">
+    <!-- Card Principal de Login -->
+    <div class="bg-white w-full max-w-md rounded-[32px] shadow-lg overflow-hidden border border-gray-100 flex flex-col">
+        
+        <!-- Topo do Card com a Logo do GitHub -->
+        <div class="bg-[#e5e5e5] py-6 px-6 flex justify-center items-center rounded-t-[32px]">
+            <div class="bg-white px-6 py-2 rounded-xl shadow-sm border border-gray-200 flex items-center justify-center">
+                <img src="https://raw.githubusercontent.com/Fiorellaoficial/fiorellaoficial.github.io/6904bc82debaf20fc8f58a69440f22d31a30516f/logo.png" alt="Logo Fiorella" class="h-8 w-auto object-contain">
+            </div>
+        </div>
 
-        <!-- Linha Superior no Mobile (Menu, Logo e Carrinho lado a lado) -->
-        <div class="flex items-center justify-between w-full md:w-auto gap-3">
-        <div class="relative flex items-center justify-between w-full md:w-auto gap-3">
-            <div class="flex items-center gap-3">
-                <!-- Botão Menu -->
-                <button class="w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-full flex items-center justify-center text-[#7d487b] shadow-md hover:bg-gray-100 transition cursor-pointer flex-shrink-0">
-                <button class="w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-full flex items-center justify-center text-[#7d487b] shadow-md hover:bg-gray-100 transition cursor-pointer flex-shrink-0 z-10">
-                    <i class="fa-solid fa-bars text-base sm:text-xl"></i>
-                </button>
-               <h1 class="absolute left-1/2 -translate-x-1/2 text-white text-lg font-bold tracking-wide md:hidden">Fiorella</h1>
+        <!-- Conteúdo do Formulário -->
+        <div class="p-6 sm:p-8 flex flex-col gap-6">
+            
+            <h2 class="text-2xl font-bold text-center text-gray-800 tracking-tight">Login</h2>
+
+            <form class="flex flex-col gap-4" onsubmit="event.preventDefault(); alert('Login efetuado com sucesso!');">
                 
-                <!-- Logo Centralizada no Mobile (Altere 'logo.png' se o nome do arquivo for diferente) -->
-                <div class="absolute left-1/2 -translate-x-1/2 md:hidden flex items-center">
-                    <img src="logo.png" alt="Logo Fiorella" class="h-9 w-auto object-contain">
+                <!-- Campo E-mail -->
+                <div class="flex flex-col gap-1.5">
+                    <label class="text-xs sm:text-sm text-gray-700 font-medium">informe o seu e-mail:</label>
+                    <input 
+                        type="email" 
+                        placeholder="ex: example@gmail.com" 
+                        required
+                        class="w-full bg-white border border-gray-300 rounded-md px-3 py-2 text-sm text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-[#7d487b]"
+                    >
                 </div>
+
+                <!-- Campo Senha -->
+                <div class="flex flex-col gap-1.5">
+                    <label class="text-xs sm:text-sm text-gray-700 font-medium">informe a sua senha:</label>
+                    <input 
+                        type="password" 
+                        required
+                        class="w-full bg-white border border-gray-300 rounded-md px-3 py-2 text-sm text-gray-700 focus:outline-none focus:ring-1 focus:ring-[#7d487b]"
+                    >
+                    <div class="text-right">
+                        <a href="#" onclick="alert('Recuperação de senha'); return false;" class="text-xs text-[#0066cc] hover:underline">Esqueci minha senha</a>
+                    </div>
+                </div>
+
+                <!-- Botão de Entrar -->
+                <button type="submit" class="mt-2 w-full bg-[#7d487b] hover:bg-[#683b66] text-white font-medium py-2.5 rounded-full shadow transition text-sm cursor-pointer">
+                    Entrar
+                </button>
+            </form>
+
+            <!-- Divisor OU -->
+            <div class="flex items-center my-1">
+                <div class="flex-1 border-t border-gray-200"></div>
+                <span class="px-3 text-xs text-gray-400 font-medium tracking-widest">OU</span>
+                <div class="flex-1 border-t border-gray-200"></div>
             </div>
 
-            <!-- Carrinho visível no Mobile na mesma linha superior -->
-            <button class="md:hidden bg-white/10 hover:bg-white/20 text-white px-3 py-2 rounded-full flex items-center gap-1.5 transition font-medium cursor-pointer text-xs flex-shrink-0">
-            <button class="md:hidden bg-white/10 hover:bg-white/20 text-white px-3 py-2 rounded-full flex items-center gap-1.5 transition font-medium cursor-pointer text-xs flex-shrink-0 z-10">
-                <i class="fa-solid fa-cart-shopping"></i>
-                <span id="cartCountMobile" class="bg-white text-[#7d487b] text-[10px] font-bold px-1.5 py-0.2 rounded-full">0</span>
+            <!-- Botão Continuar com o Google -->
+            <button onclick="alert('Redirecionando para login com Google...');" class="w-full bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 font-medium py-2.5 px-4 rounded-full shadow-sm flex items-center justify-center gap-2 transition text-sm cursor-pointer">
+                <svg class="w-4 h-4" viewBox="0 0 24 24">
+                    <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/>
+                    <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.11-6.72-4.95H1.2v3.14C3.2 21.36 7.23 24 12 24z"/>
+                    <path fill="#FBBC05" d="M5.28 14.25c-.25-.72-.38-1.49-.38-2.25s.13-1.53.38-2.25V6.61H1.2C.43 8.15 0 9.89 0 12s.43 3.85 1.2 5.39l4.08-3.14z"/>
+                    <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.23 0 3.2 2.64 1.2 6.61l4.08 3.14c.95-2.84 3.6-4.95 6.72-4.95z"/>
+                </svg>
+                <span>Continuar com o Google</span>
             </button>
+
         </div>
+    </div>
 
-        <!-- Barra de Pesquisa (Ocupa o espaço central com elegância) -->
-        <!-- Barra de Pesquisa -->
-        <div class="w-full md:flex-1 md:max-w-xl md:mx-4 relative flex items-center">
-            <input 
-                type="text" 
-                id="searchInput"
-                placeholder="Pesquisar temperos, ervas..." 
-                class="w-full bg-white text-gray-700 placeholder-gray-400 text-xs sm:text-base py-2.5 sm:py-3 pl-4 sm:pl-5 pr-12 rounded-full focus:outline-none shadow-md"
-            >
-            <button class="absolute right-4 text-gray-500 hover:text-[#7d487b] transition">
-                <i class="fa-solid fa-magnifying-glass text-sm sm:text-lg"></i>
-            </button>
-        </div>
-
-        <!-- Ações do Cabeçalho (Apenas para Desktop / Telas Médias para cima) -->
-        <div class="hidden md:flex items-center gap-4">
-            <h1 class="text-white text-2xl font-bold tracking-wide mr-2">Fiorella</h1>
-        <!-- Ações do Cabeçalho (Desktop) -->
-        <div class="hidden md:flex items-center gap-6">
-            <!-- Logo no Desktop -->
-            <div class="flex items-center">
-                <img src="logo.png" alt="Logo Fiorella" class="h-12 w-auto object-contain">
-            </div>
-            
-            <button class="bg-white/10 hover:bg-white/20 text-white px-4 py-2.5 rounded-full flex items-center gap-2 transition font-medium cursor-pointer">
-                <i class="fa-solid fa-cart-shopping"></i>
-                <span>Carrinho</span>
-                <span id="cartCount" class="bg-white text-[#7d487b] text-xs font-bold px-2 py-0.5 rounded-full ml-1">0</span>
-            </button>
-        </div>
-    </header>
-
-    <!-- Conteúdo Principal -->
-    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-8 py-6 sm:py-10">
-        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-6 sm:mb-8">
-            <h2 class="text-xl sm:text-2xl font-bold text-gray-800">Catálogo de Produtos</h2>
-            <span id="productCounter" class="text-sm sm:text-base text-gray-600 font-medium">Exibindo produtos disponíveis</span>
-        </div>
-
-        <!-- Container Dinâmico para produtos (Grid Responsivo) -->
-        <!-- Container Dinâmico para produtos -->
-        <div id="productContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-            <!-- Os cards são gerados aqui -->
-        </div>
-
-        <!-- Mensagem de Nenhum Produto Encontrado -->
-        <div id="noResults" class="hidden text-center py-16">
-            <i class="fa-solid fa-box-open text-5xl text-gray-400 mb-4"></i>
-            <p class="text-gray-600 text-lg font-medium">Nenhum produto encontrado para sua busca.</p>
-        </div>
-    </main>
-
-    <!-- Rodapé -->
-    <footer class="bg-[#7d487b] text-white text-center py-5 sm:py-6 mt-auto">
-        <p class="text-xs sm:text-sm">© 2026 Fiorella - Todos os direitos reservados.</p>
-    </footer>
-
-    <!-- Script JavaScript -->
-    <script>
-        const products = [
-            {
-                id: 1,
-                name: "Alho picado",
-                price: "R\$ 2,50",
-                weight: "+30g",
-                image: "https://swiftbr.vteximg.com.br/arquivos/ids/208690/617916-alho-picado_inn.jpg?v=638870659361330000"
-            },
-            {
-                id: 2,
-                name: "Orégano Desidratado",
-                price: "R\$ 4,00",
-                weight: "+20g",
-                image: "https://boutiquedeorganicos.com.br/wp-content/uploads/2021/07/Oregano-Desidratado-Org.jpg"
-            },
-            {
-                id: 3,
-                name: "Colorau Natural",
-                price: "R\$ 3,50",
-                weight: "+3g",
-                image: "https://images.tcdn.com.br/img/img_prod/1370319/90_colorau_extra_forte_1kg_9_1_3753d17b015c94e873c7f396c61213ea.png"
-            },
-            {
-                id: 4,
-                name: "Pimenta do Reino",
-                price: "R\$ 5,00",
-                weight: "+5g",
-                image: "https://33443.cdn.simplo7.net/static/33443/sku/temperos.html-pimenta-do-reino-preta-moida--p-1682014181969.jpg"
-            },
-            {
-                id: 5,
-                name: "Noz-moscada",
-                price: "R\$ 6,00",
-                weight: "+10g",
-                image: "https://imageswscdn.wslojas.com.br/files/24534/noz-moscada-po-10-kg-saca-20-1.jpg"
-            },
-            {
-                id: 6,
-                name: "Açafrão-da-terra",
-                price: "R\$ 3,00",
-                weight: "+15g",
-                image: "https://images.tcdn.com.br/img/img_prod/637387/curcuma_acafrao_da_terra_504_1_8c94510f1c12cc0240653f3cd4d5e775_20260223161743.jpg"
-            }
-        ];
-
-        let cartCountValue = 0;
-
-        function renderProducts(list) {
-            const container = document.getElementById('productContainer');
-            const noResults = document.getElementById('noResults');
-            const counter = document.getElementById('productCounter');
-
-            container.innerHTML = '';
-            counter.textContent = `Exibindo ${list.length} produto(s)`;
-
-            if (list.length === 0) {
-                noResults.classList.remove('hidden');
-                return;
-            } else {
-                noResults.classList.add('hidden');
-            }
-
-            list.forEach(product => {
-                const card = document.createElement('div');
-                card.className = "bg-[#b4f3cd] rounded-[24px] p-4 sm:p-6 shadow-md flex items-center justify-between gap-3 sm:gap-4 transition transform hover:-translate-y-1";
-
-                card.innerHTML = `
-                    <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-[18px] overflow-hidden flex-shrink-0 bg-white shadow-sm">
-                        <img 
-                            src="${product.image}" 
-                            alt="${product.name}" 
-                            class="w-full h-full object-cover"
-                            onerror="this.src='https://placehold.co/200x200/ffffff/7d487b?text=Item'"
-                        >
-                    </div>
-
-                    <div class="flex-1 flex flex-col justify-center min-w-0">
-                        <h3 class="text-gray-900 font-bold text-base sm:text-xl leading-snug truncate">${product.name}</h3>
-                        <div class="flex items-center gap-2 mt-1 sm:mt-2 flex-wrap">
-                            <span class="text-gray-900 font-bold text-sm sm:text-base">${product.price}</span>
-                            <span class="bg-[#528a6c] text-white text-[10px] sm:text-xs font-semibold px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full shadow-sm">${product.weight}</span>
-                        </div>
-                    </div>
-
-                    <div class="flex flex-col items-end gap-2 sm:gap-3 flex-shrink-0">
-                        <button onclick="addToCart('${product.name}')" class="bg-white hover:bg-gray-100 text-gray-800 font-medium px-3 sm:px-4 py-1.5 sm:py-2 rounded-full shadow-sm flex items-center gap-1 text-xs sm:text-sm transition cursor-pointer" title="Adicionar ao carrinho">
-                            <span>+</span>
-                            <i class="fa-solid fa-cart-shopping text-[10px] sm:text-xs"></i>
-                        </button>
-                        <button onclick="viewDetails('${product.name}')" class="bg-[#528a6c] hover:bg-[#437258] text-white text-[11px] sm:text-xs font-semibold px-3 sm:px-4 py-1.5 sm:py-2 rounded-full shadow-sm transition cursor-pointer">
-                            ver mais
-                        </button>
-                    </div>
-                `;
-                container.appendChild(card);
-            });
-        }
-
-        function addToCart(productName) {
-            cartCountValue++;
-            
-            // Atualiza o contador tanto no desktop quanto no mobile
-            const countEl = document.getElementById('cartCount');
-            const countMobileEl = document.getElementById('cartCountMobile');
-            if(countEl) countEl.textContent = cartCountValue;
-            if(countMobileEl) countMobileEl.textContent = cartCountValue;
-
-            const toast = document.createElement('div');
-            toast.className = "fixed bottom-5 right-5 bg-gray-900 text-white px-5 py-3 rounded-xl shadow-lg z-50 text-sm font-medium transition animate-fade-in";
-            toast.innerHTML = `<i class="fa-solid fa-check text-green-400 mr-2"></i> ${productName} adicionado ao carrinho!`;
-            document.body.appendChild(toast);
-
-            setTimeout(() => {
-                toast.remove();
-            }, 2500);
-        }
-
-        function viewDetails(productName) {
-            alert(`Detalhes do produto: ${productName}`);
-        }
-
-        document.getElementById('searchInput').addEventListener('input', (e) => {
-            const term = e.target.value.toLowerCase();
-            const filtered = products.filter(p => p.name.toLowerCase().includes(term));
-            renderProducts(filtered);
-        });
-
-        window.onload = () => {
-            renderProducts(products);
-        };
-    </script>
 </body>
 </html>
