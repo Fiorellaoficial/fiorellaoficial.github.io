@@ -25,7 +25,7 @@
     <!-- Cabeçalho (100% Responsivo) -->
     <header class="bg-[#7d487b] px-3 sm:px-8 py-3 sm:py-5 shadow-md flex flex-col md:flex-row items-center justify-between gap-3 sticky top-0 z-50">
         
-        <!-- Linha Superior no Mobile (Menu, Logo e Carrinho lado a lado) -->
+        <!-- Linha Superior no Mobile -->
         <div class="relative flex items-center justify-between w-full md:w-auto gap-3">
             <div class="flex items-center gap-3">
                 <!-- Botão Menu -->
@@ -33,13 +33,13 @@
                     <i class="fa-solid fa-bars text-base sm:text-xl"></i>
                 </button>
                 
-                <!-- Logo Centralizada no Mobile (Altere 'logo.png' se o nome do arquivo for diferente) -->
+                <!-- Logo Centralizada no Mobile -->
                 <div class="absolute left-1/2 -translate-x-1/2 md:hidden flex items-center">
-                    <img src="logo.png" alt="Logo Fiorella" class="h-9 w-auto object-contain">
+                    <img src="https://raw.githubusercontent.com/Fiorellaoficial/fiorellaoficial.github.io/232e3b8bf032c7543c6e152fad45eee3d73b200f/logo.png" alt="Logo Fiorella" class="h-9 w-auto object-contain">
                 </div>
             </div>
 
-            <!-- Carrinho visível no Mobile na mesma linha superior -->
+            <!-- Carrinho no Mobile -->
             <button class="md:hidden bg-white/10 hover:bg-white/20 text-white px-3 py-2 rounded-full flex items-center gap-1.5 transition font-medium cursor-pointer text-xs flex-shrink-0 z-10">
                 <i class="fa-solid fa-cart-shopping"></i>
                 <span id="cartCountMobile" class="bg-white text-[#7d487b] text-[10px] font-bold px-1.5 py-0.2 rounded-full">0</span>
@@ -63,7 +63,7 @@
         <div class="hidden md:flex items-center gap-6">
             <!-- Logo no Desktop -->
             <div class="flex items-center">
-                <img src="logo.png" alt="Logo Fiorella" class="h-12 w-auto object-contain">
+                <img src="https://raw.githubusercontent.com/Fiorellaoficial/fiorellaoficial.github.io/232e3b8bf032c7543c6e152fad45eee3d73b200f/logo.png" alt="Logo Fiorella" class="h-12 w-auto object-contain">
             </div>
             
             <button class="bg-white/10 hover:bg-white/20 text-white px-4 py-2.5 rounded-full flex items-center gap-2 transition font-medium cursor-pointer">
@@ -83,7 +83,7 @@
 
         <!-- Container Dinâmico para produtos -->
         <div id="productContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-            <!-- Os cards são gerados aqui -->
+            <!-- Os cards são gerados via JavaScript -->
         </div>
 
         <!-- Mensagem de Nenhum Produto Encontrado -->
