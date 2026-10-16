@@ -79,6 +79,8 @@
         <p class="text-sm">© 2026 Fiorella - Todos os direitos reservados.</p>
     </footer>
 
+
+    
     <!-- Script JavaScript para renderização dinâmica e busca -->
     <script>
         // Array de objetos de produtos: Para adicionar novos produtos
@@ -129,7 +131,7 @@
 
         let cartCountValue = 0;
 
-        // Função para renderizar os produtos no DOM
+        // Função de renderizar os produtos
         function renderProducts(list) {
             const container = document.getElementById('productContainer');
             const noResults = document.getElementById('noResults');
@@ -181,12 +183,12 @@
             });
         }
 
-        // Função de simulação de adicionar ao carrinho
+        // Simulação de adicionar ao carrinho
         function addToCart(productName) {
             cartCountValue++;
             document.getElementById('cartCount').textContent = cartCountValue;
             
-            // Notificação visual sutil
+            // Notificação visual
             const toast = document.createElement('div');
             toast.className = "fixed bottom-5 right-5 bg-gray-900 text-white px-5 py-3 rounded-xl shadow-lg z-50 text-sm font-medium transition animate-fade-in";
             toast.innerHTML = `<i class="fa-solid fa-check text-green-400 mr-2"></i> ${productName} adicionado ao carrinho!`;
@@ -197,7 +199,7 @@
             }, 2500);
         }
 
-        // Função para o botão "ver mais"
+        // Função do botão "ver mais"
         function viewDetails(productName) {
             alert(`Detalhes do produto: ${productName}`);
         }
