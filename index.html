@@ -3,155 +3,216 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Loja de Temperos e Produtos</title>
-    <!-- Tailwind CSS para estilização rápida e responsiva -->
+    <title>Fiorella</title>
+
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+
     <!-- FontAwesome para ícones -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <!-- Google Fonts Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #d2e4ea; /* Tom de azul claro idêntico ao da imagem */
+            background-color: #d2e4ea; /* Fundo azul claro padrão */
         }
     </style>
 </head>
-<body class="min-h-screen flex justify-center items-start py-0 md:py-6">
+<body class="min-h-screen flex flex-col">
 
-    <!-- Container simulando a tela de um smartphone -->
-    <div class="w-full max-w-md min-h-screen md:min-h-[850px] bg-[#d2e4ea] md:rounded-[40px] md:shadow-2xl overflow-hidden flex flex-col relative">
-
-        <!-- Barra de Topo Roxa -->
-        <header class="bg-[#7d487b] px-4 pt-6 pb-6 rounded-b-[28px] shadow-md flex items-center justify-between gap-3">
-            <!-- Botão Menu Hambúrguer -->
-            <button class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-[#7d487b] shadow-inner focus:outline-none hover:bg-gray-100 transition">
+    <!-- Cabeçalho -->
+    <header class="bg-[#7d487b] px-8 py-5 shadow-md flex items-center justify-between sticky top-0 z-50">
+        <div class="flex items-center gap-6">
+            <!-- Botão Menu -->
+            <button class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-[#7d487b] shadow-md hover:bg-gray-100 transition cursor-pointer">
                 <i class="fa-solid fa-bars text-xl"></i>
             </button>
+            <h1 class="text-white text-2xl font-bold tracking-wide hidden sm:block">Fiorella</h1>
+        </div>
 
-            <!-- Barra de Pesquisa -->
-            <div class="flex-1 relative flex items-center">
-                <input 
-                    type="text" 
-                    placeholder="Pesquisar" 
-                    class="w-full bg-white text-gray-700 placeholder-gray-400 text-base py-3 pl-4 pr-12 rounded-full focus:outline-none shadow-inner"
-                >
-                <button class="absolute right-4 text-gray-500 focus:outline-none">
-                    <i class="fa-solid fa-magnifying-glass text-lg"></i>
-                </button>
-            </div>
-        </header>
+        <!-- Barra de Pesquisa -->
+        <div class="flex-1 max-w-xl mx-8 relative flex items-center">
+            <input 
+                type="text" 
+                id="searchInput"
+                placeholder="Pesquisar temperos, ervas, produtos..." 
+                class="w-full bg-white text-gray-700 placeholder-gray-400 text-base py-3 pl-5 pr-14 rounded-full focus:outline-none shadow-md"
+            >
+            <button class="absolute right-5 text-gray-500 hover:text-[#7d487b] transition">
+                <i class="fa-solid fa-magnifying-glass text-lg"></i>
+            </button>
+        </div>
 
-        <!-- Lista de Produtos -->
-        <main class="flex-1 px-4 py-6 flex flex-col gap-4 overflow-y-auto">
+        <!-- Ações do Cabeçalho -->
+        <div class="flex items-center gap-4">
+            <button class="bg-white/10 hover:bg-white/20 text-white px-4 py-2.5 rounded-full flex items-center gap-2 transition font-medium cursor-pointer">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span>Carrinho</span>
+                <span id="cartCount" class="bg-white text-[#7d487b] text-xs font-bold px-2 py-0.5 rounded-full ml-1">0</span>
+            </button>
+        </div>
+    </header>
 
-            <!-- Cartão 1: Alho picado -->
-            <div class="bg-[#b4f3cd] rounded-[24px] p-4 shadow-sm flex items-center justify-between relative">
-                <!-- Imagem do Produto -->
-                <div class="w-20 h-20 rounded-[18px] overflow-hidden flex-shrink-0 bg-white shadow-sm">
-                    <img 
-                        src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&w=200&q=80" 
-                        alt="Alho picado" 
-                        class="w-full h-full object-cover"
-                        onerror="this.src='https://placehold.co/200x200/ffffff/7d487b?text=Alho'"
-                    >
-                </div>
+    <!-- Conteúdo Principal -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-8 py-10">
+        <div class="flex justify-between items-center mb-8">
+            <h2 class="text-2xl font-bold text-gray-800">Catálogo de Produtos</h2>
+            <span id="productCounter" class="text-gray-600 font-medium">Exibindo produtos disponíveis</span>
+        </div>
 
-                <!-- Detalhes do Produto -->
-                <div class="flex-1 ml-3 flex flex-col justify-center">
-                    <h2 class="text-gray-800 font-semibold text-lg leading-tight">Alho picado</h2>
-                    <div class="flex items-center gap-2 mt-1">
-                        <span class="text-gray-800 font-medium text-sm">R$2,5</span>
-                        <span class="bg-[#528a6c] text-white text-xs font-semibold px-2.5 py-0.5 rounded-full shadow-sm">+3g</span>
+        <!-- Container Dinâmico para produtos via JavaScript -->
+        <div id="productContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Os cards são gerados aqui -->
+        </div>
+
+        <!-- Mensagem de Nenhum Produto Encontrado -->
+        <div id="noResults" class="hidden text-center py-16">
+            <i class="fa-solid fa-box-open text-5xl text-gray-400 mb-4"></i>
+            <p class="text-gray-600 text-lg font-medium">Nenhum produto encontrado para sua busca.</p>
+        </div>
+    </main>
+
+    <!-- Rodapé -->
+    <footer class="bg-[#7d487b] text-white text-center py-6 mt-auto">
+        <p class="text-sm">© 2026 Fiorella - Todos os direitos reservados.</p>
+    </footer>
+
+    <!-- Script JavaScript para renderização dinâmica e busca -->
+    <script>
+        // Array de objetos de produtos: Para adicionar novos produtos, basta incluir um novo objeto aqui!
+        const products = [
+            {
+                id: 1,
+                name: "Alho picado",
+                price: "R$ 2,50",
+                weight: "+3g",
+                image: "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&w=300&q=80"
+            },
+            {
+                id: 2,
+                name: "Produto 2",
+                price: "R$ ---",
+                weight: "+3g",
+                image: "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=300&q=80"
+            },
+            {
+                id: 3,
+                name: "Produto 3",
+                price: "R$ ---",
+                weight: "+3g",
+                image: "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=300&q=80"
+            },
+            {
+                id: 4,
+                name: "Orégano Desidratado",
+                price: "R$ 4,00",
+                weight: "+3g",
+                image: "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=300&q=80"
+            },
+            {
+                id: 5,
+                name: "Colorau Natural",
+                price: "R$ 3,50",
+                weight: "+3g",
+                image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=300&q=80"
+            },
+            {
+                id: 6,
+                name: "Pimenta do Reino",
+                price: "R$ 5,00",
+                weight: "+3g",
+                image: "https://images.unsplash.com/photo-1532336414038-cf19250c5756?auto=format&fit=crop&w=300&q=80"
+            }
+        ];
+
+        let cartCountValue = 0;
+
+        // Função para renderizar os produtos no DOM
+        function renderProducts(list) {
+            const container = document.getElementById('productContainer');
+            const noResults = document.getElementById('noResults');
+            const counter = document.getElementById('productCounter');
+            
+            container.innerHTML = '';
+            counter.textContent = `Exibindo ${list.length} produto(s)`;
+
+            if (list.length === 0) {
+                noResults.classList.remove('hidden');
+                return;
+            } else {
+                noResults.classList.add('hidden');
+            }
+
+            list.forEach(product => {
+                const card = document.createElement('div');
+                card.className = "bg-[#b4f3cd] rounded-[24px] p-6 shadow-md flex items-center justify-between gap-4 transition transform hover:-translate-y-1";
+                
+                card.innerHTML = `
+                    <div class="w-24 h-24 rounded-[18px] overflow-hidden flex-shrink-0 bg-white shadow-sm">
+                        <img 
+                            src="${product.image}" 
+                            alt="${product.name}" 
+                            class="w-full h-full object-cover"
+                            onerror="this.src='https://placehold.co/200x200/ffffff/7d487b?text=Item'"
+                        >
                     </div>
-                </div>
 
-                <!-- Ações (Botões) -->
-                <div class="flex flex-col items-end gap-2">
-                    <!-- Botão Adicionar ao Carrinho -->
-                    <button class="bg-white hover:bg-gray-50 text-gray-800 font-medium px-3.5 py-1.5 rounded-full shadow-sm flex items-center gap-1.5 text-sm transition">
-                        <span>+</span>
-                        <i class="fa-solid fa-cart-shopping text-xs"></i>
-                    </button>
-                    <!-- Botão Ver Mais -->
-                    <button class="bg-[#528a6c] hover:bg-[#437258] text-white text-xs font-medium px-3.5 py-1.5 rounded-full shadow-sm transition">
-                        ver mais
-                    </button>
-                </div>
-            </div>
-
-            <!-- Cartão 2: Produto 2 -->
-            <div class="bg-[#b4f3cd] rounded-[24px] p-4 shadow-sm flex items-center justify-between relative">
-                <!-- Imagem do Produto -->
-                <div class="w-20 h-20 rounded-[18px] overflow-hidden flex-shrink-0 bg-white shadow-sm">
-                    <img 
-                        src="https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=200&q=80" 
-                        alt="Produto 2" 
-                        class="w-full h-full object-cover"
-                        onerror="this.src='https://placehold.co/200x200/ffffff/7d487b?text=Prod+2'"
-                    >
-                </div>
-
-                <!-- Detalhes do Produto -->
-                <div class="flex-1 ml-3 flex flex-col justify-center">
-                    <h2 class="text-gray-800 font-semibold text-lg leading-tight">Produto 2</h2>
-                    <div class="flex items-center gap-2 mt-1">
-                        <span class="text-gray-800 font-medium text-sm">R$---</span>
-                        <span class="bg-[#528a6c] text-white text-xs font-semibold px-2.5 py-0.5 rounded-full shadow-sm">+3g</span>
+                    <div class="flex-1 flex flex-col justify-center">
+                        <h3 class="text-gray-900 font-bold text-xl leading-snug">${product.name}</h3>
+                        <div class="flex items-center gap-2 mt-2">
+                            <span class="text-gray-900 font-bold text-base">${product.price}</span>
+                            <span class="bg-[#528a6c] text-white text-xs font-semibold px-2.5 py-1 rounded-full shadow-sm">${product.weight}</span>
+                        </div>
                     </div>
-                </div>
 
-                <!-- Ações (Botões) -->
-                <div class="flex flex-col items-end gap-2">
-                    <!-- Botão Adicionar ao Carrinho -->
-                    <button class="bg-white hover:bg-gray-50 text-gray-800 font-medium px-3.5 py-1.5 rounded-full shadow-sm flex items-center gap-1.5 text-sm transition">
-                        <span>+</span>
-                        <i class="fa-solid fa-cart-shopping text-xs"></i>
-                    </button>
-                    <!-- Botão Ver Mais -->
-                    <button class="bg-[#528a6c] hover:bg-[#437258] text-white text-xs font-medium px-3.5 py-1.5 rounded-full shadow-sm transition">
-                        ver mais
-                    </button>
-                </div>
-            </div>
-
-            <!-- Cartão 3: Produto 3 -->
-            <div class="bg-[#b4f3cd] rounded-[24px] p-4 shadow-sm flex items-center justify-between relative">
-                <!-- Imagem do Produto -->
-                <div class="w-20 h-20 rounded-[18px] overflow-hidden flex-shrink-0 bg-white shadow-sm">
-                    <img 
-                        src="https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=200&q=80" 
-                        alt="Produto 3" 
-                        class="w-full h-full object-cover"
-                        onerror="this.src='https://placehold.co/200x200/ffffff/7d487b?text=Prod+3'"
-                    >
-                </div>
-
-                <!-- Detalhes do Produto -->
-                <div class="flex-1 ml-3 flex flex-col justify-center">
-                    <h2 class="text-gray-800 font-semibold text-lg leading-tight">Produto 3</h2>
-                    <div class="flex items-center gap-2 mt-1">
-                        <span class="text-gray-800 font-medium text-sm">R$---</span>
-                        <span class="bg-[#528a6c] text-white text-xs font-semibold px-2.5 py-0.5 rounded-full shadow-sm">+3g</span>
+                    <div class="flex flex-col items-end gap-3">
+                        <button onclick="addToCart('${product.name}')" class="bg-white hover:bg-gray-100 text-gray-800 font-medium px-4 py-2 rounded-full shadow-sm flex items-center gap-1.5 text-sm transition cursor-pointer" title="Adicionar ao carrinho">
+                            <span>+</span>
+                            <i class="fa-solid fa-cart-shopping text-xs"></i>
+                        </button>
+                        <button onclick="viewDetails('${product.name}')" class="bg-[#528a6c] hover:bg-[#437258] text-white text-xs font-semibold px-4 py-2 rounded-full shadow-sm transition cursor-pointer">
+                            ver mais
+                        </button>
                     </div>
-                </div>
+                `;
+                container.appendChild(card);
+            });
+        }
 
-                <!-- Ações (Botões) -->
-                <div class="flex flex-col items-end gap-2">
-                    <!-- Botão Adicionar ao Carrinho -->
-                    <button class="bg-white hover:bg-gray-50 text-gray-800 font-medium px-3.5 py-1.5 rounded-full shadow-sm flex items-center gap-1.5 text-sm transition">
-                        <span>+</span>
-                        <i class="fa-solid fa-cart-shopping text-xs"></i>
-                    </button>
-                    <!-- Botão Ver Mais -->
-                    <button class="bg-[#528a6c] hover:bg-[#437258] text-white text-xs font-medium px-3.5 py-1.5 rounded-full shadow-sm transition">
-                        ver mais
-                    </button>
-                </div>
-            </div>
+        // Função de simulação de adicionar ao carrinho
+        function addToCart(productName) {
+            cartCountValue++;
+            document.getElementById('cartCount').textContent = cartCountValue;
+            
+            // Notificação visual sutil
+            const toast = document.createElement('div');
+            toast.className = "fixed bottom-5 right-5 bg-gray-900 text-white px-5 py-3 rounded-xl shadow-lg z-50 text-sm font-medium transition animate-fade-in";
+            toast.innerHTML = `<i class="fa-solid fa-check text-green-400 mr-2"></i> ${productName} adicionado ao carrinho!`;
+            document.body.appendChild(toast);
 
-        </main>
-    </div>
+            setTimeout(() => {
+                toast.remove();
+            }, 2500);
+        }
 
+        // Função para o botão "ver mais"
+        function viewDetails(productName) {
+            alert(`Detalhes do produto: ${productName}`);
+        }
+
+        // Filtro interativo da barra de pesquisa
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            const filtered = products.filter(p => p.name.toLowerCase().includes(term));
+            renderProducts(filtered);
+        });
+
+        // Inicialização ao carregar a página
+        window.onload = () => {
+            renderProducts(products);
+        };
+    </script>
 </body>
 </html>
