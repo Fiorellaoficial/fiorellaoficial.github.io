@@ -16,29 +16,29 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #d2e4ea; /* Fundo azul claro padrão */
+            background-color: #d2e4ea;
         }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
 
-    <!-- Cabeçalho -->
-    <header class="bg-[#7d487b] px-8 py-5 shadow-md flex items-center justify-between sticky top-0 z-50">
-        <div class="flex items-center gap-6">
+    <!-- Cabeçalho (Responsivo: Ajusta espaçamentos e quebra elementos em telas menores) -->
+    <header class="bg-[#7d487b] px-4 sm:px-8 py-4 shadow-md flex flex-col sm:flex-row items-center justify-between gap-4 sticky top-0 z-50">
+        <div class="flex items-center justify-between w-full sm:w-auto">
             <!-- Botão Menu -->
-            <button class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-[#7d487b] shadow-md hover:bg-gray-100 transition cursor-pointer">
-                <i class="fa-solid fa-bars text-xl"></i>
+            <button class="w-11 h-11 sm:w-12 sm:h-12 bg-white rounded-full flex items-center justify-center text-[#7d487b] shadow-md hover:bg-gray-100 transition cursor-pointer">
+                <i class="fa-solid fa-bars text-lg sm:text-xl"></i>
             </button>
-            <h1 class="text-white text-2xl font-bold tracking-wide hidden sm:block">Fiorella</h1>
+            <h1 class="text-white text-xl sm:text-2xl font-bold tracking-wide sm:hidden">Fiorella</h1>
         </div>
 
         <!-- Barra de Pesquisa -->
-        <div class="flex-1 max-w-xl mx-8 relative flex items-center">
+        <div class="w-full sm:flex-1 sm:max-w-xl sm:mx-8 relative flex items-center">
             <input 
                 type="text" 
                 id="searchInput"
-                placeholder="Pesquisar temperos, ervas, produtos..." 
-                class="w-full bg-white text-gray-700 placeholder-gray-400 text-base py-3 pl-5 pr-14 rounded-full focus:outline-none shadow-md"
+                placeholder="Pesquisar temperos, ervas..." 
+                class="w-full bg-white text-gray-700 placeholder-gray-400 text-sm sm:text-base py-3 pl-5 pr-14 rounded-full focus:outline-none shadow-md"
             >
             <button class="absolute right-5 text-gray-500 hover:text-[#7d487b] transition">
                 <i class="fa-solid fa-magnifying-glass text-lg"></i>
@@ -46,7 +46,7 @@
         </div>
 
         <!-- Ações do Cabeçalho -->
-        <div class="flex items-center gap-4">
+        <div class="hidden sm:flex items-center gap-4">
             <button class="bg-white/10 hover:bg-white/20 text-white px-4 py-2.5 rounded-full flex items-center gap-2 transition font-medium cursor-pointer">
                 <i class="fa-solid fa-cart-shopping"></i>
                 <span>Carrinho</span>
@@ -56,14 +56,14 @@
     </header>
 
     <!-- Conteúdo Principal -->
-    <main class="flex-1 max-w-7xl w-full mx-auto px-8 py-10">
-        <div class="flex justify-between items-center mb-8">
-            <h2 class="text-2xl font-bold text-gray-800">Catálogo de Produtos</h2>
-            <span id="productCounter" class="text-gray-600 font-medium">Exibindo produtos disponíveis</span>
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-8 py-6 sm:py-10">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-6 sm:mb-8">
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-800">Catálogo de Produtos</h2>
+            <span id="productCounter" class="text-sm sm:text-base text-gray-600 font-medium">Exibindo produtos disponíveis</span>
         </div>
 
-        <!-- Container Dinâmico para produtos via JavaScript -->
-        <div id="productContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Container Dinâmico para produtos (Responsivo: 1 coluna no celular, 2 em tablets, 3 em desktop) -->
+        <div id="productContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             <!-- Os cards são gerados aqui -->
         </div>
 
@@ -75,55 +75,52 @@
     </main>
 
     <!-- Rodapé -->
-    <footer class="bg-[#7d487b] text-white text-center py-6 mt-auto">
-        <p class="text-sm">© 2026 Fiorella - Todos os direitos reservados.</p>
+    <footer class="bg-[#7d487b] text-white text-center py-5 sm:py-6 mt-auto">
+        <p class="text-xs sm:text-sm">© 2026 Fiorella - Todos os direitos reservados.</p>
     </footer>
 
-
-    
-    <!-- Script JavaScript para renderização dinâmica e busca -->
+    <!-- Script JavaScript -->
     <script>
-        // Array de objetos de produtos: Para adicionar novos produtos
         const products = [
             {
                 id: 1,
                 name: "Alho picado",
-                price: "R$ 2,50",
+                price: "R\$ 2,50",
                 weight: "+30g",
                 image: "https://swiftbr.vteximg.com.br/arquivos/ids/208690/617916-alho-picado_inn.jpg?v=638870659361330000"
             },
-             {
+            {
                 id: 2,
                 name: "Orégano Desidratado",
-                price: "R$ 4,00",
+                price: "R\$ 4,00",
                 weight: "+20g",
                 image: "https://boutiquedeorganicos.com.br/wp-content/uploads/2021/07/Oregano-Desidratado-Org.jpg"
             },
             {
                 id: 3,
                 name: "Colorau Natural",
-                price: "R$ 3,50",
+                price: "R\$ 3,50",
                 weight: "+3g",
                 image: "https://images.tcdn.com.br/img/img_prod/1370319/90_colorau_extra_forte_1kg_9_1_3753d17b015c94e873c7f396c61213ea.png"
             },
             {
                 id: 4,
                 name: "Pimenta do Reino",
-                price: "R$ 5,00",
+                price: "R\$ 5,00",
                 weight: "+5g",
                 image: "https://33443.cdn.simplo7.net/static/33443/sku/temperos.html-pimenta-do-reino-preta-moida--p-1682014181969.jpg"
             },
             {
                 id: 5,
                 name: "Noz-moscada",
-                price: "R$ ---",
+                price: "R\$ ---",
                 weight: "+10g",
                 image: "https://imageswscdn.wslojas.com.br/files/24534/noz-moscada-po-10-kg-saca-20-1.jpg"
             },
             {
                 id: 6,
                 name: "Açafrão-da-terra",
-                price: "R$ ---",
+                price: "R\$ ---",
                 weight: "+5g",
                 image: "https://images.tcdn.com.br/img/img_prod/637387/curcuma_acafrao_da_terra_504_1_8c94510f1c12cc0240653f3cd4d5e775_20260223161743.jpg"
             }
@@ -131,7 +128,6 @@
 
         let cartCountValue = 0;
 
-        // Função de renderizar os produtos
         function renderProducts(list) {
             const container = document.getElementById('productContainer');
             const noResults = document.getElementById('noResults');
@@ -149,10 +145,11 @@
 
             list.forEach(product => {
                 const card = document.createElement('div');
-                card.className = "bg-[#b4f3cd] rounded-[24px] p-6 shadow-md flex items-center justify-between gap-4 transition transform hover:-translate-y-1";
+                // Ajustado padding e flexbox para se comportar perfeitamente em telas móveis e desktop
+                card.className = "bg-[#b4f3cd] rounded-[24px] p-4 sm:p-6 shadow-md flex items-center justify-between gap-3 sm:gap-4 transition transform hover:-translate-y-1";
                 
                 card.innerHTML = `
-                    <div class="w-24 h-24 rounded-[18px] overflow-hidden flex-shrink-0 bg-white shadow-sm">
+                    <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-[18px] overflow-hidden flex-shrink-0 bg-white shadow-sm">
                         <img 
                             src="${product.image}" 
                             alt="${product.name}" 
@@ -161,20 +158,20 @@
                         >
                     </div>
 
-                    <div class="flex-1 flex flex-col justify-center">
-                        <h3 class="text-gray-900 font-bold text-xl leading-snug">${product.name}</h3>
-                        <div class="flex items-center gap-2 mt-2">
-                            <span class="text-gray-900 font-bold text-base">${product.price}</span>
-                            <span class="bg-[#528a6c] text-white text-xs font-semibold px-2.5 py-1 rounded-full shadow-sm">${product.weight}</span>
+                    <div class="flex-1 flex flex-col justify-center min-w-0">
+                        <h3 class="text-gray-900 font-bold text-base sm:text-xl leading-snug truncate">${product.name}</h3>
+                        <div class="flex items-center gap-2 mt-1 sm:mt-2 flex-wrap">
+                            <span class="text-gray-900 font-bold text-sm sm:text-base">${product.price}</span>
+                            <span class="bg-[#528a6c] text-white text-[10px] sm:text-xs font-semibold px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full shadow-sm">${product.weight}</span>
                         </div>
                     </div>
 
-                    <div class="flex flex-col items-end gap-3">
-                        <button onclick="addToCart('${product.name}')" class="bg-white hover:bg-gray-100 text-gray-800 font-medium px-4 py-2 rounded-full shadow-sm flex items-center gap-1.5 text-sm transition cursor-pointer" title="Adicionar ao carrinho">
+                    <div class="flex flex-col items-end gap-2 sm:gap-3 flex-shrink-0">
+                        <button onclick="addToCart('${product.name}')" class="bg-white hover:bg-gray-100 text-gray-800 font-medium px-3 sm:px-4 py-1.5 sm:py-2 rounded-full shadow-sm flex items-center gap-1 text-xs sm:text-sm transition cursor-pointer" title="Adicionar ao carrinho">
                             <span>+</span>
-                            <i class="fa-solid fa-cart-shopping text-xs"></i>
+                            <i class="fa-solid fa-cart-shopping text-[10px] sm:text-xs"></i>
                         </button>
-                        <button onclick="viewDetails('${product.name}')" class="bg-[#528a6c] hover:bg-[#437258] text-white text-xs font-semibold px-4 py-2 rounded-full shadow-sm transition cursor-pointer">
+                        <button onclick="viewDetails('${product.name}')" class="bg-[#528a6c] hover:bg-[#437258] text-white text-[11px] sm:text-xs font-semibold px-3 sm:px-4 py-1.5 sm:py-2 rounded-full shadow-sm transition cursor-pointer">
                             ver mais
                         </button>
                     </div>
@@ -183,12 +180,11 @@
             });
         }
 
-        // Simulação de adicionar ao carrinho
         function addToCart(productName) {
             cartCountValue++;
-            document.getElementById('cartCount').textContent = cartCountValue;
+            const countEl = document.getElementById('cartCount');
+            if(countEl) countEl.textContent = cartCountValue;
             
-            // Notificação visual
             const toast = document.createElement('div');
             toast.className = "fixed bottom-5 right-5 bg-gray-900 text-white px-5 py-3 rounded-xl shadow-lg z-50 text-sm font-medium transition animate-fade-in";
             toast.innerHTML = `<i class="fa-solid fa-check text-green-400 mr-2"></i> ${productName} adicionado ao carrinho!`;
@@ -199,19 +195,16 @@
             }, 2500);
         }
 
-        // Função do botão "ver mais"
         function viewDetails(productName) {
             alert(`Detalhes do produto: ${productName}`);
         }
 
-        // Filtro interativo da barra de pesquisa
         document.getElementById('searchInput').addEventListener('input', (e) => {
             const term = e.target.value.toLowerCase();
             const filtered = products.filter(p => p.name.toLowerCase().includes(term));
             renderProducts(filtered);
         });
 
-        // Inicialização ao carregar a página
         window.onload = () => {
             renderProducts(products);
         };
