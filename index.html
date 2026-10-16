@@ -22,27 +22,31 @@
 </head>
 <body class="min-h-screen flex flex-col">
 
-    <!-- Cabeçalho (100% Responsivo: Mantém menu, busca e carrinho visíveis em qualquer tela) -->
+    <!-- Cabeçalho (100% Responsivo) -->
     <header class="bg-[#7d487b] px-3 sm:px-8 py-3 sm:py-5 shadow-md flex flex-col md:flex-row items-center justify-between gap-3 sticky top-0 z-50">
         
         <!-- Linha Superior no Mobile (Menu, Logo e Carrinho lado a lado) -->
-        <div class="flex items-center justify-between w-full md:w-auto gap-3">
+        <div class="relative flex items-center justify-between w-full md:w-auto gap-3">
             <div class="flex items-center gap-3">
                 <!-- Botão Menu -->
-                <button class="w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-full flex items-center justify-center text-[#7d487b] shadow-md hover:bg-gray-100 transition cursor-pointer flex-shrink-0">
+                <button class="w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-full flex items-center justify-center text-[#7d487b] shadow-md hover:bg-gray-100 transition cursor-pointer flex-shrink-0 z-10">
                     <i class="fa-solid fa-bars text-base sm:text-xl"></i>
                 </button>
-               <h1 class="absolute left-1/2 -translate-x-1/2 text-white text-lg font-bold tracking-wide md:hidden">Fiorella</h1>
+                
+                <!-- Logo Centralizada no Mobile (Altere 'logo.png' se o nome do arquivo for diferente) -->
+                <div class="absolute left-1/2 -translate-x-1/2 md:hidden flex items-center">
+                    <img src="logo.png" alt="Logo Fiorella" class="h-9 w-auto object-contain">
+                </div>
             </div>
 
             <!-- Carrinho visível no Mobile na mesma linha superior -->
-            <button class="md:hidden bg-white/10 hover:bg-white/20 text-white px-3 py-2 rounded-full flex items-center gap-1.5 transition font-medium cursor-pointer text-xs flex-shrink-0">
+            <button class="md:hidden bg-white/10 hover:bg-white/20 text-white px-3 py-2 rounded-full flex items-center gap-1.5 transition font-medium cursor-pointer text-xs flex-shrink-0 z-10">
                 <i class="fa-solid fa-cart-shopping"></i>
                 <span id="cartCountMobile" class="bg-white text-[#7d487b] text-[10px] font-bold px-1.5 py-0.2 rounded-full">0</span>
             </button>
         </div>
 
-        <!-- Barra de Pesquisa (Ocupa o espaço central com elegância) -->
+        <!-- Barra de Pesquisa -->
         <div class="w-full md:flex-1 md:max-w-xl md:mx-4 relative flex items-center">
             <input 
                 type="text" 
@@ -55,9 +59,13 @@
             </button>
         </div>
 
-        <!-- Ações do Cabeçalho (Apenas para Desktop / Telas Médias para cima) -->
-        <div class="hidden md:flex items-center gap-4">
-            <h1 class="text-white text-2xl font-bold tracking-wide mr-2">Fiorella</h1>
+        <!-- Ações do Cabeçalho (Desktop) -->
+        <div class="hidden md:flex items-center gap-6">
+            <!-- Logo no Desktop -->
+            <div class="flex items-center">
+                <img src="logo.png" alt="Logo Fiorella" class="h-12 w-auto object-contain">
+            </div>
+            
             <button class="bg-white/10 hover:bg-white/20 text-white px-4 py-2.5 rounded-full flex items-center gap-2 transition font-medium cursor-pointer">
                 <i class="fa-solid fa-cart-shopping"></i>
                 <span>Carrinho</span>
@@ -73,7 +81,7 @@
             <span id="productCounter" class="text-sm sm:text-base text-gray-600 font-medium">Exibindo produtos disponíveis</span>
         </div>
 
-        <!-- Container Dinâmico para produtos (Grid Responsivo) -->
+        <!-- Container Dinâmico para produtos -->
         <div id="productContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             <!-- Os cards são gerados aqui -->
         </div>
@@ -192,8 +200,6 @@
 
         function addToCart(productName) {
             cartCountValue++;
-            
-            // Atualiza o contador tanto no desktop quanto no mobile
             const countEl = document.getElementById('cartCount');
             const countMobileEl = document.getElementById('cartCountMobile');
             if(countEl) countEl.textContent = cartCountValue;
