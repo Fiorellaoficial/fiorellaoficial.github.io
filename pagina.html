@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fiorella</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- FontAwesome para ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #d2e4ea;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- Cabeçalho (100% Responsivo) -->
+    <!-- Cabeçalho (100% Responsivo: Mantém menu, busca e carrinho visíveis em qualquer tela) -->
+    <header class="bg-[#7d487b] px-3 sm:px-8 py-3 sm:py-5 shadow-md flex flex-col md:flex-row items-center justify-between gap-3 sticky top-0 z-50">
+        
+        <!-- Linha Superior no Mobile -->
+        <div class="relative flex items-center justify-between w-full md:w-auto gap-3">
+
+        <!-- Linha Superior no Mobile (Menu, Logo e Carrinho lado a lado) -->
+        <div class="flex items-center justify-between w-full md:w-auto gap-3">
+            <div class="flex items-center gap-3">
+                <!-- Botão Menu -->
+                <button class="w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-full flex items-center justify-center text-[#7d487b] shadow-md hover:bg-gray-100 transition cursor-pointer flex-shrink-0 z-10">
+                <button class="w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-full flex items-center justify-center text-[#7d487b] shadow-md hover:bg-gray-100 transition cursor-pointer flex-shrink-0">
+                    <i class="fa-solid fa-bars text-base sm:text-xl"></i>
+                </button>
+                
+                <!-- Logo Centralizada no Mobile -->
+                <div class="absolute left-1/2 -translate-x-1/2 md:hidden flex items-center">
+                    <img src="https://raw.githubusercontent.com/Fiorellaoficial/fiorellaoficial.github.io/6904bc82debaf20fc8f58a69440f22d31a30516f/logo.png" alt="Logo Fiorella" class="h-9 w-auto object-contain">
+                </div>
+               <h1 class="absolute left-1/2 -translate-x-1/2 text-white text-lg font-bold tracking-wide md:hidden">Fiorella</h1>
+            </div>
+
+            <!-- Carrinho no Mobile -->
+            <button class="md:hidden bg-white/10 hover:bg-white/20 text-white px-3 py-2 rounded-full flex items-center gap-1.5 transition font-medium cursor-pointer text-xs flex-shrink-0 z-10">
+            <!-- Carrinho visível no Mobile na mesma linha superior -->
+            <button class="md:hidden bg-white/10 hover:bg-white/20 text-white px-3 py-2 rounded-full flex items-center gap-1.5 transition font-medium cursor-pointer text-xs flex-shrink-0">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span id="cartCountMobile" class="bg-white text-[#7d487b] text-[10px] font-bold px-1.5 py-0.2 rounded-full">0</span>
+            </button>
+        </div>
+
+        <!-- Barra de Pesquisa -->
+        <!-- Barra de Pesquisa (Ocupa o espaço central com elegância) -->
+        <div class="w-full md:flex-1 md:max-w-xl md:mx-4 relative flex items-center">
+            <input 
+                type="text" 
+                id="searchInput"
+                placeholder="Pesquisar temperos, ervas..." 
+                class="w-full bg-white text-gray-700 placeholder-gray-400 text-xs sm:text-base py-2.5 sm:py-3 pl-4 sm:pl-5 pr-12 rounded-full focus:outline-none shadow-md"
+            >
+            <button class="absolute right-4 text-gray-500 hover:text-[#7d487b] transition">
+                <i class="fa-solid fa-magnifying-glass text-sm sm:text-lg"></i>
+            </button>
+        </div>
+
+        <!-- Ações do Cabeçalho (Desktop) -->
+        <div class="hidden md:flex items-center gap-6">
+            <!-- Logo no Desktop -->
+            <div class="flex items-center">
+                <img src="https://raw.githubusercontent.com/Fiorellaoficial/fiorellaoficial.github.io/6904bc82debaf20fc8f58a69440f22d31a30516f/logo.png" alt="Logo Fiorella" class="h-12 w-auto object-contain">
+            </div>
+            
+        <!-- Ações do Cabeçalho (Apenas para Desktop / Telas Médias para cima) -->
+        <div class="hidden md:flex items-center gap-4">
+            <h1 class="text-white text-2xl font-bold tracking-wide mr-2">Fiorella</h1>
+            <button class="bg-white/10 hover:bg-white/20 text-white px-4 py-2.5 rounded-full flex items-center gap-2 transition font-medium cursor-pointer">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span>Carrinho</span>
+                <span id="cartCount" class="bg-white text-[#7d487b] text-xs font-bold px-2 py-0.5 rounded-full ml-1">0</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Conteúdo Principal -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-8 py-6 sm:py-10">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-6 sm:mb-8">
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-800">Catálogo de Produtos</h2>
+            <span id="productCounter" class="text-sm sm:text-base text-gray-600 font-medium">Exibindo produtos disponíveis</span>
+        </div>
+
+        <!-- Container Dinâmico para produtos -->
+        <!-- Container Dinâmico para produtos (Grid Responsivo) -->
+        <div id="productContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+            <!-- Os cards são gerados via JavaScript -->
+            <!-- Os cards são gerados aqui -->
+        </div>
+
+        <!-- Mensagem de Nenhum Produto Encontrado -->
+        <div id="noResults" class="hidden text-center py-16">
+            <i class="fa-solid fa-box-open text-5xl text-gray-400 mb-4"></i>
+            <p class="text-gray-600 text-lg font-medium">Nenhum produto encontrado para sua busca.</p>
+        </div>
+    </main>
+
+    <!-- Rodapé -->
+    <footer class="bg-[#7d487b] text-white text-center py-5 sm:py-6 mt-auto">
+        <p class="text-xs sm:text-sm">© 2026 Fiorella - Todos os direitos reservados.</p>
+    </footer>
+
+    <!-- Script JavaScript -->
+    <script>
+        const products = [
+            {
+                id: 1,
+                name: "Alho picado",
+                price: "R\$ 2,50",
+                weight: "+30g",
+                image: "https://swiftbr.vteximg.com.br/arquivos/ids/208690/617916-alho-picado_inn.jpg?v=638870659361330000"
+            },
+            {
+                id: 2,
+                name: "Orégano Desidratado",
+                price: "R\$ 4,00",
+                weight: "+20g",
+                image: "https://boutiquedeorganicos.com.br/wp-content/uploads/2021/07/Oregano-Desidratado-Org.jpg"
+            },
+            {
+                id: 3,
+                name: "Colorau Natural",
+                price: "R\$ 3,50",
+                weight: "+3g",
+                image: "https://images.tcdn.com.br/img/img_prod/1370319/90_colorau_extra_forte_1kg_9_1_3753d17b015c94e873c7f396c61213ea.png"
+            },
+            {
+                id: 4,
+                name: "Pimenta do Reino",
+                price: "R\$ 5,00",
+                weight: "+5g",
+                image: "https://33443.cdn.simplo7.net/static/33443/sku/temperos.html-pimenta-do-reino-preta-moida--p-1682014181969.jpg"
+            },
+            {
+                id: 5,
+                name: "Noz-moscada",
+                price: "R\$ 300",
+                price: "R\$ 6,00",
+                weight: "+10g",
+                image: "https://imageswscdn.wslojas.com.br/files/24534/noz-moscada-po-10-kg-saca-20-1.jpg"
+            },
+            {
+                id: 6,
+                name: "Açafrão-da-terra",
+                price: "R\$ 300",
+                weight: "+5g",
+                price: "R\$ 3,00",
+                weight: "+15g",
+                image: "https://images.tcdn.com.br/img/img_prod/637387/curcuma_acafrao_da_terra_504_1_8c94510f1c12cc0240653f3cd4d5e775_20260223161743.jpg"
+            }
+        ];
+
+        let cartCountValue = 0;
+
+        function renderProducts(list) {
+            const container = document.getElementById('productContainer');
+            const noResults = document.getElementById('noResults');
+            const counter = document.getElementById('productCounter');
+            
+
+            container.innerHTML = '';
+            counter.textContent = `Exibindo ${list.length} produto(s)`;
+
+            if (list.length === 0) {
+                noResults.classList.remove('hidden');
+                return;
+            } else {
+                noResults.classList.add('hidden');
+            }
+
+            list.forEach(product => {
+                const card = document.createElement('div');
+                card.className = "bg-[#b4f3cd] rounded-[24px] p-4 sm:p-6 shadow-md flex items-center justify-between gap-3 sm:gap-4 transition transform hover:-translate-y-1";
+                
+
+                card.innerHTML = `
+                    <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-[18px] overflow-hidden flex-shrink-0 bg-white shadow-sm">
+                        <img 
+                            src="${product.image}" 
+                            alt="${product.name}" 
+                            class="w-full h-full object-cover"
+                            onerror="this.src='https://placehold.co/200x200/ffffff/7d487b?text=Item'"
+                        >
+                    </div>
+
+                    <div class="flex-1 flex flex-col justify-center min-w-0">
+                        <h3 class="text-gray-900 font-bold text-base sm:text-xl leading-snug truncate">${product.name}</h3>
+                        <div class="flex items-center gap-2 mt-1 sm:mt-2 flex-wrap">
+                            <span class="text-gray-900 font-bold text-sm sm:text-base">${product.price}</span>
+                            <span class="bg-[#528a6c] text-white text-[10px] sm:text-xs font-semibold px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full shadow-sm">${product.weight}</span>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col items-end gap-2 sm:gap-3 flex-shrink-0">
+                        <button onclick="addToCart('${product.name}')" class="bg-white hover:bg-gray-100 text-gray-800 font-medium px-3 sm:px-4 py-1.5 sm:py-2 rounded-full shadow-sm flex items-center gap-1 text-xs sm:text-sm transition cursor-pointer" title="Adicionar ao carrinho">
+                            <span>+</span>
+                            <i class="fa-solid fa-cart-shopping text-[10px] sm:text-xs"></i>
+                        </button>
+                        <button onclick="viewDetails('${product.name}')" class="bg-[#528a6c] hover:bg-[#437258] text-white text-[11px] sm:text-xs font-semibold px-3 sm:px-4 py-1.5 sm:py-2 rounded-full shadow-sm transition cursor-pointer">
+                            ver mais
+                        </button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function addToCart(productName) {
+            cartCountValue++;
+
+            // Atualiza o contador tanto no desktop quanto no mobile
+            const countEl = document.getElementById('cartCount');
+            const countMobileEl = document.getElementById('cartCountMobile');
+            if(countEl) countEl.textContent = cartCountValue;
+            if(countMobileEl) countMobileEl.textContent = cartCountValue;
+            
+
+            const toast = document.createElement('div');
+            toast.className = "fixed bottom-5 right-5 bg-gray-900 text-white px-5 py-3 rounded-xl shadow-lg z-50 text-sm font-medium transition animate-fade-in";
+            toast.innerHTML = `<i class="fa-solid fa-check text-green-400 mr-2"></i> ${productName} adicionado ao carrinho!`;
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.remove();
+            }, 2500);
+        }
+
+        function viewDetails(productName) {
+            alert(`Detalhes do produto: ${productName}`);
+        }
+
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            const filtered = products.filter(p => p.name.toLowerCase().includes(term));
+            renderProducts(filtered);
+        });
+
+        window.onload = () => {
+            renderProducts(products);
+        };
+    </script>
+</body>
+</html>
