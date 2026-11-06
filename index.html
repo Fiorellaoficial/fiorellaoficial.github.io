@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fiorella - Page Login</title>
+    <title>Fiorella - Login</title>
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -29,7 +29,7 @@
         <div class="bg-[#e5e5e5] py-6 px-6 flex justify-center items-center rounded-t-[32px]">
             <div class="bg-white px-6 py-2 rounded-xl shadow-sm border border-gray-200 flex items-center justify-center">
                 <img src="https://raw.githubusercontent.com/Fiorellaoficial/fiorellaoficial.github.io/6904bc82debaf20fc8f58a69440f22d31a30516f/logo.png" 
-                     alt="Logo Fiorella"
+                     alt="Logo Fiorella" 
                      class="h-9 w-auto object-contain rounded-tr-[20px] rounded-bl-[20px]"
                      onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\'text-[#7d487b] font-bold text-lg\'>Fiorella</span>'">
             </div>
@@ -40,11 +40,11 @@
             
             <h2 class="text-2xl font-bold text-center text-gray-800 tracking-tight">Login</h2>
 
-            <form class="flex flex-col gap-4" onsubmit="event.preventDefault(); alert('Login efetuado com sucesso!');">
+            <form class="flex flex-col gap-4" onsubmit="event.preventDefault(); alert('Login efetuado com sucesso!'); window.location.href='pagina.html';">
                 
                 <!-- Campo E-mail -->
                 <div class="flex flex-col gap-1.5">
-                    <label class="text-xs sm:text-sm text-gray-700 font-medium">informe o seu e-mail:</label>
+                    <label class="text-xs sm:text-sm text-gray-700 font-medium">Informe o seu e-mail:</label>
                     <input 
                         type="email" 
                         placeholder="ex: example@gmail.com" 
@@ -55,14 +55,14 @@
 
                 <!-- Campo Senha -->
                 <div class="flex flex-col gap-1.5">
-                    <label class="text-xs sm:text-sm text-gray-700 font-medium">informe a sua senha:</label>
+                    <label class="text-xs sm:text-sm text-gray-700 font-medium">Informe a sua senha:</label>
                     <input 
                         type="password" 
                         required
                         class="w-full bg-white border border-gray-300 rounded-md px-3 py-2 text-sm text-gray-700 focus:outline-none focus:ring-1 focus:ring-[#7d487b]"
                     >
                     <div class="text-right">
-                        <a href="#" onclick="alert('Recuperação de senha'); return false;" class="text-xs text-[#0066cc] hover:underline">Esqueci minha senha</a>
+                        <a href="#" onclick="alert('Recuperação de senha'); return false;" class="text-xs text-[#7d487b] hover:underline font-medium">Esqueci minha senha</a>
                     </div>
                 </div>
 
@@ -80,7 +80,7 @@
             </div>
 
             <!-- Botão Continuar com o Google -->
-            <button onclick="alert('Redirecionando para login com Google...');" class="w-full bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 font-medium py-2.5 px-4 rounded-full shadow-sm flex items-center justify-center gap-2 transition text-sm cursor-pointer">
+            <button onclick="alert('Redirecionando para login com Google...'); window.location.href='pagina.html';" class="w-full bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 font-medium py-2.5 px-4 rounded-full shadow-sm flex items-center justify-center gap-2 transition text-sm cursor-pointer">
                 <svg class="w-4 h-4" viewBox="0 0 24 24">
                     <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/>
                     <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.11-6.72-4.95H1.2v3.14C3.2 21.36 7.23 24 12 24z"/>
@@ -89,7 +89,8 @@
                 </svg>
                 <span>Continuar com o Google</span>
             </button>
-        <!-- Botão Voltar ao Catálogo -->
+
+            <!-- Botão Voltar ao Catálogo -->
             <a href="pagina.html" class="w-full text-center bg-[#528a6c] hover:bg-[#437258] text-white font-semibold py-2.5 rounded-full shadow transition text-sm">
                 Ir para o Catálogo
             </a>
