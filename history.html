@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Histórico de Pedidos - Fiorella</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- FontAwesome para ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #d2e4ea;
+        }
+        /* Custom scrollbar para modais e áreas roláveis */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background-color: #7d487b;
+            border-radius: 9999px;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- Cabeçalho Responsivo Padronizado com o Index -->
+    <header class="bg-[#7d487b] px-3 sm:px-8 py-3 sm:py-5 shadow-md flex flex-col md:flex-row items-center justify-between gap-3 sticky top-0 z-40">
+
+        <!-- Linha Superior no Mobile (Menu/Voltar, Logo e Carrinho) -->
+        <div class="relative flex items-center justify-between w-full md:w-auto gap-3">
+            <div class="flex items-center gap-3">
+                <!-- Botão Voltar ao Catálogo -->
+                <a href="index.html" class="w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-full flex items-center justify-center text-[#7d487b] shadow-md hover:bg-gray-100 transition cursor-pointer flex-shrink-0 z-10" title="Voltar à Loja">
+                    <i class="fa-solid fa-arrow-left text-base sm:text-xl"></i>
+                </a>
+                
+                <!-- Logo Centralizada no Mobile com Borda Arredondada Personalizada -->
+                <div class="absolute left-1/2 -translate-x-1/2 md:hidden flex items-center">
+                    <img src="logo.png" alt="Logo Fiorella" class="h-9 w-auto object-contain rounded-tr-[22px] rounded-bl-[22px]" onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\'text-white font-bold text-lg\'>Fiorella</span>'">
+                </div>
+            </div>
+
+            <!-- Carrinho Mobile -->
+            <button class="md:hidden bg-white/10 hover:bg-white/20 text-white px-3 py-2 rounded-full flex items-center gap-1.5 transition font-medium cursor-pointer text-xs flex-shrink-0 z-10">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span id="cartCountMobile" class="bg-white text-[#7d487b] text-[10px] font-bold px-1.5 py-0.2 rounded-full">0</span>
+            </button>
+        </div>
+
+        <!-- Barra de Pesquisa de Pedidos -->
+        <div class="w-full md:flex-1 md:max-w-xl md:mx-4 relative flex items-center">
+            <input 
+                type="text" 
+                id="searchOrderInput"
+                placeholder="Pesquisar por número do pedido (#1042) ou tempero..." 
+                class="w-full bg-white text-gray-700 placeholder-gray-400 text-xs sm:text-base py-2.5 sm:py-3 pl-4 sm:pl-5 pr-12 rounded-full focus:outline-none shadow-md"
+            >
+            <button class="absolute right-4 text-gray-500 hover:text-[#7d487b] transition">
+                <i class="fa-solid fa-magnifying-glass text-sm sm:text-lg"></i>
+            </button>
+        </div>
+
+        <!-- Ações do Cabeçalho (Desktop) -->
+        <div class="hidden md:flex items-center gap-4">
+            <div class="flex items-center">
+                <!-- Logo Desktop com Borda Arredondada Personalizada -->
+                <a href="pagina.html" class="flex items-center gap-2">
+                    <img src="logo.png" alt="Logo Fiorella" class="h-12 w-auto object-contain rounded-tr-[20px] rounded-bl-[20px]" onerror="this.onerror=null; this.parentElement.innerHTML='<h1 class=\'text-white text-2xl font-bold tracking-wide\'>Fiorella</h1>'">
+                </a>
+            </div>
+
+            <a href="index.html" class="bg-white/10 hover:bg-white/20 text-white px-4 py-2.5 rounded-full flex items-center gap-2 transition font-medium text-sm cursor-pointer">
+                <i class="fa-solid fa-store"></i>
+                <span>Catálogo</span>
+            </a>
+            
+            <button class="bg-white/10 hover:bg-white/20 text-white px-4 py-2.5 rounded-full flex items-center gap-2 transition font-medium cursor-pointer">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span>Carrinho</span>
+                <span id="cartCount" class="bg-white text-[#7d487b] text-xs font-bold px-2 py-0.5 rounded-full ml-1">0</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Conteúdo Principal -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-8 py-6 sm:py-10">
+        
+        <!-- Título e Subtítulo -->
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6 sm:mb-8">
+            <div>
+                <h2 class="text-2xl sm:text-3xl font-bold text-gray-800 flex items-center gap-3">
+                    <i class="fa-solid fa-receipt text-[#7d487b]"></i> Meus Pedidos
+                </h2>
+                <p class="text-sm sm:text-base text-gray-600 font-medium mt-1">Acompanhe e gerencie o histórico das suas compras de temperos</p>
+            </div>
+            
+            <!-- Contador de Pedidos -->
+            <span id="ordersCounter" class="bg-white px-4 py-2 rounded-full text-sm font-semibold text-gray-700 shadow-sm border border-gray-200">
+                Carregando pedidos...
+            </span>
+        </div>
+
+        <!-- Filtros Rápidos de Status -->
+        <div class="flex items-center gap-2 mb-6 overflow-x-auto pb-2 scrollbar-none">
+            <button onclick="filterStatus('all')" id="btnFilterAll" class="filter-btn bg-[#7d487b] text-white px-4 py-2 rounded-full text-xs sm:text-sm font-semibold shadow-sm transition whitespace-nowrap">
+                Todos os Pedidos
+            </button>
+            <button onclick="filterStatus('delivered')" id="btnFilterDelivered" class="filter-btn bg-white hover:bg-gray-100 text-gray-700 px-4 py-2 rounded-full text-xs sm:text-sm font-semibold shadow-sm transition whitespace-nowrap">
+                <i class="fa-solid fa-circle-check text-emerald-600 mr-1.5"></i> Entregues
+            </button>
+            <button onclick="filterStatus('transit')" id="btnFilterTransit" class="filter-btn bg-white hover:bg-gray-100 text-gray-700 px-4 py-2 rounded-full text-xs sm:text-sm font-semibold shadow-sm transition whitespace-nowrap">
+                <i class="fa-solid fa-truck-fast text-amber-500 mr-1.5"></i> Em Trânsito
+            </button>
+            <button onclick="filterStatus('processing')" id="btnFilterProcessing" class="filter-btn bg-white hover:bg-gray-100 text-gray-700 px-4 py-2 rounded-full text-xs sm:text-sm font-semibold shadow-sm transition whitespace-nowrap">
+                <i class="fa-solid fa-clock text-blue-500 mr-1.5"></i> Em Preparo
+            </button>
+        </div>
+
+        <!-- Container de Lista de Pedidos -->
+        <div id="ordersContainer" class="space-y-6">
+            <!-- Os cards de pedidos serão inseridos via JavaScript -->
+        </div>
+
+        <!-- Estado Vazio / Nenhum Pedido Encontrado -->
+        <div id="noOrders" class="hidden text-center py-16 bg-white/60 backdrop-blur-sm rounded-3xl border border-white/50 shadow-sm">
+            <i class="fa-solid fa-box-open text-6xl text-gray-400 mb-4"></i>
+            <h3 class="text-xl font-bold text-gray-700">Nenhum pedido encontrado</h3>
+            <p class="text-gray-500 text-sm mt-1 max-w-md mx-auto">Não encontramos nenhum pedido com o filtro ou termo buscado. Tente pesquisar por outro número de pedido ou produto.</p>
+            <button onclick="resetFilters()" class="mt-4 bg-[#7d487b] hover:bg-[#683966] text-white px-5 py-2.5 rounded-full text-sm font-medium transition cursor-pointer">
+                Limpar Filtros
+            </button>
+        </div>
+
+    </main>
+
+    <!-- Modal de Detalhes / Comprovante do Pedido -->
+    <div id="orderModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50 hidden transition-opacity duration-300">
+        <div class="bg-white rounded-[28px] max-w-lg w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden animate-fade-in">
+            <!-- Cabeçalho do Modal -->
+            <div class="bg-[#7d487b] text-white p-5 flex items-center justify-between">
+                <div>
+                    <h3 class="font-bold text-lg" id="modalOrderId">Pedido #0000</h3>
+                    <p class="text-xs text-purple-200" id="modalOrderDate">Realizado em --/--/----</p>
+                </div>
+                <button onclick="closeModal()" class="w-8 h-8 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center text-white transition">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Corpo do Modal -->
+            <div class="p-5 sm:p-6 overflow-y-auto flex-1 space-y-4 text-gray-700 text-sm" id="modalBody">
+                <!-- Conteúdo injetado via JS -->
+            </div>
+
+            <!-- Rodapé do Modal -->
+            <div class="p-4 bg-gray-50 border-t border-gray-100 flex items-center justify-end gap-3">
+                <button onclick="closeModal()" class="px-5 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold rounded-full text-xs sm:text-sm transition cursor-pointer">
+                    Fechar
+                </button>
+                <button id="modalReorderBtn" class="px-5 py-2 bg-[#528a6c] hover:bg-[#437258] text-white font-semibold rounded-full text-xs sm:text-sm shadow-sm transition flex items-center gap-2 cursor-pointer">
+                    <i class="fa-solid fa-rotate-right"></i> Repetir Este Pedido
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Rodapé Padronizado -->
+    <footer class="bg-[#7d487b] text-white text-center py-5 sm:py-6 mt-auto">
+        <p class="text-xs sm:text-sm">© 2026 Fiorella - Todos os direitos reservados.</p>
+    </footer>
+
+    <!-- Scripts JavaScript -->
+    <script>
+        // Dados simulados de histórico de pedidos
+        const orderHistory = [
+            {
+                id: "1048",
+                date: "04/03/2026 às 14:32",
+                status: "delivered",
+                statusText: "Entregue",
+                paymentMethod: "PIX",
+                shippingAddress: "Rua das Flores, 123 - Centro, São Paulo - SP",
+                total: "R$ 15,00",
+                items: [
+                    { name: "Alho picado", weight: "+30g", qty: 2, price: "R$ 2,50", image: "https://swiftbr.vteximg.com.br/arquivos/ids/208690/617916-alho-picado_inn.jpg?v=638870659361330000" },
+                    { name: "Orégano Desidratado", weight: "+20g", qty: 1, price: "R$ 4,00", image: "https://boutiquedeorganicos.com.br/wp-content/uploads/2021/07/Oregano-Desidratado-Org.jpg" },
+                    { name: "Noz-moscada", weight: "+10g", qty: 1, price: "R$ 6,00", image: "https://imageswscdn.wslojas.com.br/files/24534/noz-moscada-po-10-kg-saca-20-1.jpg" }
+                ]
+            },
+            {
+                id: 1045,
+                date: "28/02/2026 às 09:15",
+                status: "transit",
+                statusText: "Em Trânsito",
+                paymentMethod: "Cartão de Crédito (Mastercard)",
+                shippingAddress: "Av. Brasil, 4500, Ap 302 - Jardim América, SP",
+                total: "R$ 11,50",
+                items: [
+                    { name: "Colorau Natural", weight: "+3g", qty: 1, price: "R$ 3,50", image: "https://images.tcdn.com.br/img/img_prod/1370319/90_colorau_extra_forte_1kg_9_1_3753d17b015c94e873c7f396c61213ea.png" },
+                    { name: "Pimenta do Reino", weight: "+5g", qty: 1, price: "R$ 5,00", image: "https://33443.cdn.simplo7.net/static/33443/sku/temperos.html-pimenta-do-reino-preta-moida--p-1682014181969.jpg" },
+                    { name: "Açafrão-da-terra", weight: "+15g", qty: 1, price: "R$ 3,00", image: "https://images.tcdn.com.br/img/img_prod/637387/curcuma_acafrao_da_terra_504_1_8c94510f1c12cc0240653f3cd4d5e775_20260223161743.jpg" }
+                ]
+            },
+            {
+                id: 1039,
+                date: "15/02/2026 às 17:45",
+                status: "processing",
+                statusText: "Em Preparo",
+                paymentMethod: "PIX",
+                shippingAddress: "Rua das Flores, 123 - Centro, São Paulo - SP",
+                total: "R$ 8,00",
+                items: [
+                    { name: "Orégano Desidratado", weight: "+20g", qty: 2, price: "R$ 4,00", image: "https://boutiquedeorganicos.com.br/wp-content/uploads/2021/07/Oregano-Desidratado-Org.jpg" }
+                ]
+            },
+            {
+                id: 1012,
+                date: "10/01/2026 às 11:00",
+                status: "delivered",
+                statusText: "Entregue",
+                paymentMethod: "Boleto Bancário",
+                shippingAddress: "Rua das Flores, 123 - Centro, São Paulo - SP",
+                total: "R$ 16,50",
+                items: [
+                    { name: "Alho picado", weight: "+30g", qty: 3, price: "R$ 2,50", image: "https://swiftbr.vteximg.com.br/arquivos/ids/208690/617916-alho-picado_inn.jpg?v=638870659361330000" },
+                    { name: "Açafrão-da-terra", weight: "+15g", qty: 3, price: "R$ 3,00", image: "https://images.tcdn.com.br/img/img_prod/637387/curcuma_acafrao_da_terra_504_1_8c94510f1c12cc0240653f3cd4d5e775_20260223161743.jpg" }
+                ]
+            }
+        ];
+
+        let currentStatusFilter = 'all';
+        let currentSearchQuery = '';
+        let cartCountValue = 0;
+
+        // Estilização das tags de status
+        function getStatusBadgeHtml(status, statusText) {
+            switch(status) {
+                case 'delivered':
+                    return `<span class="bg-emerald-100 text-emerald-800 border border-emerald-300 text-xs font-semibold px-3 py-1 rounded-full flex items-center gap-1.5">
+                                <i class="fa-solid fa-circle-check text-emerald-600"></i> ${statusText}
+                            </span>`;
+                case 'transit':
+                    return `<span class="bg-amber-100 text-amber-800 border border-amber-300 text-xs font-semibold px-3 py-1 rounded-full flex items-center gap-1.5">
+                                <i class="fa-solid fa-truck-fast text-amber-600"></i> ${statusText}
+                            </span>`;
+                case 'processing':
+                    return `<span class="bg-blue-100 text-blue-800 border border-blue-300 text-xs font-semibold px-3 py-1 rounded-full flex items-center gap-1.5">
+                                <i class="fa-solid fa-clock text-blue-600"></i> ${statusText}
+                            </span>`;
+                default:
+                    return `<span class="bg-gray-100 text-gray-800 text-xs font-semibold px-3 py-1 rounded-full">${statusText}</span>`;
+            }
+        }
+
+        // Renderizar Lista de Pedidos
+        function renderOrders() {
+            const container = document.getElementById('ordersContainer');
+            const noOrders = document.getElementById('noOrders');
+            const counter = document.getElementById('ordersCounter');
+
+            // Filtragem por status e busca
+            const filtered = orderHistory.filter(order => {
+                const matchesStatus = currentStatusFilter === 'all' || order.status === currentStatusFilter;
+                
+                const searchLower = currentSearchQuery.toLowerCase();
+                const matchesId = String(order.id).toLowerCase().includes(searchLower);
+                const matchesItem = order.items.some(item => item.name.toLowerCase().includes(searchLower));
+                
+                return matchesStatus && (matchesId || matchesItem);
+            });
+
+            counter.textContent = `Exibindo ${filtered.length} pedido(s)`;
+            container.innerHTML = '';
+
+            if (filtered.length === 0) {
+                noOrders.classList.remove('hidden');
+                return;
+            } else {
+                noOrders.classList.add('hidden');
+            }
+
+            filtered.forEach(order => {
+                const card = document.createElement('div');
+                // Estilo padronizado igual ao card de produtos: verde #b4f3cd, rounded-[24px]
+                card.className = "bg-[#b4f3cd] rounded-[24px] p-5 sm:p-6 shadow-md transition transform hover:-translate-y-0.5 border border-emerald-200/50 flex flex-col gap-4";
+
+                // Gerar mini-lista de itens dentro do card
+                const itemsListHtml = order.items.map(item => `
+                    <div class="flex items-center gap-3 bg-white/70 p-2.5 rounded-[16px]">
+                        <img 
+                            src="${item.image}" 
+                            alt="${item.name}" 
+                            class="w-12 h-12 rounded-xl object-cover bg-white flex-shrink-0"
+                            onerror="this.src='https://placehold.co/100x100/ffffff/7d487b?text=Item'"
+                        >
+                        <div class="flex-1 min-w-0">
+                            <h4 class="text-gray-900 font-bold text-sm truncate">${item.name}</h4>
+                            <p class="text-xs text-gray-600">${item.qty}x • <span class="bg-[#528a6c] text-white text-[9px] px-1.5 py-0.2 rounded-full font-semibold">${item.weight}</span></p>
+                        </div>
+                        <span class="text-xs font-bold text-gray-800">${item.price}</span>
+                    </div>
+                `).join('');
+
+                card.innerHTML = `
+                    <!-- Topo do Card -->
+                    <div class="flex flex-wrap items-center justify-between gap-2 border-b border-emerald-300/40 pb-3">
+                        <div class="flex items-center gap-3">
+                            <span class="bg-[#7d487b] text-white font-bold text-xs sm:text-sm px-3 py-1 rounded-full shadow-sm">
+                                Pedido #${order.id}
+                            </span>
+                            <span class="text-xs sm:text-sm text-gray-700 font-medium">
+                                <i class="fa-regular fa-calendar mr-1"></i>${order.date}
+                            </span>
+                        </div>
+                        <div>
+                            ${getStatusBadgeHtml(order.status, order.statusText)}
+                        </div>
+                    </div>
+
+                    <!-- Lista de Produtos Comprados -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
+                        ${itemsListHtml}
+                    </div>
+
+                    <!-- Rodapé do Card: Valor Total & Ações -->
+                    <div class="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-emerald-300/40">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs text-gray-600 font-medium">Total do Pedido:</span>
+                            <span class="text-gray-900 font-extrabold text-lg sm:text-xl">${order.total}</span>
+                        </div>
+
+                        <div class="flex items-center gap-2 flex-wrap">
+                            <button onclick="openModal('${order.id}')" class="bg-white hover:bg-gray-50 text-gray-800 font-semibold px-4 py-2 rounded-full text-xs sm:text-sm shadow-sm transition flex items-center gap-1.5 cursor-pointer">
+                                <i class="fa-solid fa-receipt text-[#7d487b]"></i> Ver Detalhes
+                            </button>
+                            <button onclick="reorderItems('${order.id}')" class="bg-[#528a6c] hover:bg-[#437258] text-white font-semibold px-4 py-2 rounded-full text-xs sm:text-sm shadow-sm transition flex items-center gap-1.5 cursor-pointer">
+                                <i class="fa-solid fa-rotate-right"></i> Repetir Pedido
+                            </button>
+                        </div>
+                    </div>
+                `;
+
+                container.appendChild(card);
+            });
+        }
+
+        // Filtro por botões de status
+        function filterStatus(status) {
+            currentStatusFilter = status;
+            
+            // Atualizar classes dos botões de filtro
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('bg-[#7d487b]', 'text-white');
+                btn.classList.add('bg-white', 'text-gray-700', 'hover:bg-gray-100');
+            });
+
+            const activeMap = {
+                'all': 'btnFilterAll',
+                'delivered': 'btnFilterDelivered',
+                'transit': 'btnFilterTransit',
+                'processing': 'btnFilterProcessing'
+            };
+
+            const activeBtn = document.getElementById(activeMap[status]);
+            if(activeBtn) {
+                activeBtn.classList.remove('bg-white', 'text-gray-700', 'hover:bg-gray-100');
+                activeBtn.classList.add('bg-[#7d487b]', 'text-white');
+            }
+
+            renderOrders();
+        }
+
+        // Resetar Filtros
+        function resetFilters() {
+            currentSearchQuery = '';
+            document.getElementById('searchOrderInput').value = '';
+            filterStatus('all');
+        }
+
+        // Função de Repetir Pedido
+        function reorderItems(orderId) {
+            const order = orderHistory.find(o => String(o.id) === String(orderId));
+            if (!order) return;
+
+            // Soma a quantidade total de itens no carrinho
+            const totalItemsCount = order.items.reduce((sum, item) => sum + item.qty, 0);
+            cartCountValue += totalItemsCount;
+
+            // Atualiza contadores de carrinho no topo
+            const countEl = document.getElementById('cartCount');
+            const countMobileEl = document.getElementById('cartCountMobile');
+            if(countEl) countEl.textContent = cartCountValue;
+            if(countMobileEl) countMobileEl.textContent = cartCountValue;
+
+            // Exibe notificação no canto da tela (Toast)
+            showToast(`${totalItemsCount} item(ns) do Pedido #${order.id} adicionado(s) ao seu carrinho!`);
+        }
+
+        // Modal de Detalhes
+        function openModal(orderId) {
+            const order = orderHistory.find(o => String(o.id) === String(orderId));
+            if (!order) return;
+
+            document.getElementById('modalOrderId').textContent = `Pedido #${order.id}`;
+            document.getElementById('modalOrderDate').textContent = `Realizado em ${order.date}`;
+            
+            const modalBody = document.getElementById('modalBody');
+            modalBody.innerHTML = `
+                <div class="bg-purple-50 p-3 rounded-2xl border border-purple-100 flex items-center justify-between">
+                    <span class="font-semibold text-purple-900">Status atual:</span>
+                    ${getStatusBadgeHtml(order.status, order.statusText)}
+                </div>
+
+                <div>
+                    <h5 class="font-bold text-gray-900 text-xs uppercase tracking-wider mb-2">Endereço de Entrega</h5>
+                    <p class="bg-gray-50 p-3 rounded-xl border border-gray-100 text-gray-600 text-xs">
+                        <i class="fa-solid fa-location-dot text-[#7d487b] mr-1"></i> ${order.shippingAddress}
+                    </p>
+                </div>
+
+                <div>
+                    <h5 class="font-bold text-gray-900 text-xs uppercase tracking-wider mb-2">Forma de Pagamento</h5>
+                    <p class="bg-gray-50 p-3 rounded-xl border border-gray-100 text-gray-600 text-xs">
+                        <i class="fa-solid fa-credit-card text-[#528a6c] mr-1"></i> ${order.paymentMethod}
+                    </p>
+                </div>
+
+                <div>
+                    <h5 class="font-bold text-gray-900 text-xs uppercase tracking-wider mb-2">Itens Solicitados</h5>
+                    <div class="space-y-2 max-h-48 overflow-y-auto pr-1">
+                        ${order.items.map(item => `
+                            <div class="flex items-center justify-between bg-gray-50 p-2.5 rounded-xl text-xs">
+                                <div class="flex items-center gap-2">
+                                    <span class="font-bold text-[#7d487b]">${item.qty}x</span>
+                                    <span class="font-medium text-gray-800">${item.name} (${item.weight})</span>
+                                </div>
+                                <span class="font-semibold text-gray-700">${item.price}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+
+                <div class="pt-2 border-t border-gray-200 flex justify-between items-center text-base">
+                    <span class="font-bold text-gray-900">Total Pago:</span>
+                    <span class="font-extrabold text-[#7d487b] text-xl">${order.total}</span>
+                </div>
+            `;
+
+            // Configurar botão de repetir no modal
+            const modalBtn = document.getElementById('modalReorderBtn');
+            modalBtn.onclick = () => {
+                reorderItems(order.id);
+                closeModal();
+            };
+
+            const modal = document.getElementById('orderModal');
+            modal.classList.remove('hidden');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('orderModal');
+            modal.classList.add('hidden');
+        }
+
+        // Notificação de Toast
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = "fixed bottom-5 right-5 bg-gray-900 text-white px-5 py-3 rounded-xl shadow-lg z-50 text-sm font-medium transition animate-fade-in flex items-center gap-2";
+            toast.innerHTML = `<i class="fa-solid fa-check text-green-400"></i> ${message}`;
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.remove();
+            }, 3000);
+        }
+
+        // Event Listeners
+        document.getElementById('searchOrderInput').addEventListener('input', (e) => {
+            currentSearchQuery = e.target.value;
+            renderOrders();
+        });
+
+        // Fechar modal ao clicar fora dele
+        window.onclick = function(event) {
+            const modal = document.getElementById('orderModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        };
+
+        // Inicialização
+        window.onload = () => {
+            renderOrders();
+        };
+    </script>
+</body>
+</html>
