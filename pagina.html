@@ -19,36 +19,6 @@
             background-color: #d2e4ea;
         }
 
-          /* Botão para abrir a aba */
-        .btn-abrir {
-	    width: 36px;
-            height: 36px;
-            background-color: #7d487b;
-            border: none;
-            border-radius: 50%;
-            cursor: pointer;
-            
-            /* Centralizar as linhas do icone do menu */
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 2.5px; 
-            
-            /* Sombra do botão */
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-            transition: background-color 0.2s ease;
-        }
-
-        /* Estiliza as 3 linhas do icone menu */
-        .linha {
-            height: 2.5px;
-            width: 85%;
-            background-color: white; /* Cor dos risquinhos */
-            border-radius: 2px; /* Deixa as pontas arredondadas */
-            transition: 0.3s ease; /* Suaviza futuras animações */
-        }
-
         /* Aba lateral */
         .sidebar {
             position: fixed;
@@ -189,10 +159,10 @@
             <div class="sidebar" id="menuLateral">
                 <button class="btn-fechar" id="fecharMenu">&times;</button>
                 <ul class="sidebar-links">
-                    <li><a href="#">Início</a></li>
-                    <li><a href="#">Catálogo</a></li>
-                    <li><a href="#">Histórico</a></li>
-                    <li><a href="#">Perfil</a></li>
+                    <li><a href="index.html">Início</a></li>
+                    <li><a href="pagina.html">Catálogo</a></li>
+                    <li><a href="history.html">Histórico</a></li>
+                    <li><a href="index.html">Perfil</a></li>
                 </ul>
             </div>
 
@@ -213,7 +183,7 @@
         <p class="text-xs sm:text-sm">© 2026 Fiorella - Todos os direitos reservados.</p>
     </footer>
 
-    <!-- Script JavaScript -->
+    <!-- JavaScript -->
     <script>
          const btnAbrir = document.getElementById('abrirMenu');
         const btnFechar = document.getElementById('fecharMenu');
