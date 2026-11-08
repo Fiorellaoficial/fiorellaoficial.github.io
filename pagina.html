@@ -18,6 +18,91 @@
             font-family: 'Inter', sans-serif;
             background-color: #d2e4ea;
         }
+
+          /* Botão para abrir a aba */
+        .btn-abrir {
+	    width: 36px;
+            height: 36px;
+            background-color: #7d487b;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            
+            /* Centralizar as linhas do icone do menu */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 2.5px; 
+            
+            /* Sombra do botão */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.2s ease;
+        }
+
+        /* Estiliza as 3 linhas do icone menu */
+        .linha {
+            height: 2.5px;
+            width: 85%;
+            background-color: white; /* Cor dos risquinhos */
+            border-radius: 2px; /* Deixa as pontas arredondadas */
+            transition: 0.3s ease; /* Suaviza futuras animações */
+        }
+
+        /* Aba lateral */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: -200px;
+            width: 150px;
+            height: 100%;
+            background-color: #7d487b;
+            color: white;
+            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.3);
+            transition: left 0.3s ease;
+            padding: 20px;
+            box-sizing: border-box;
+            z-index: 1000;
+        }
+
+        /*Mostrar a aba */
+        .sidebar.ativo {
+            left: 0;
+        }
+
+        /* Botão de fechar aba */
+        .btn-fechar {
+            font-size: 30px;
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            position: absolute;
+            top: 10px;
+            right: 20px;
+        }
+
+        /* Links da aba */
+        .sidebar-links {
+            list-style: none;
+            padding: 0;
+            margin-top: 60px;
+        }
+
+        .sidebar-links li {
+            margin: 20px 0;
+        }
+
+        .sidebar-links a {
+            color: #ccc;
+            text-decoration: none;
+            font-size: 15px;
+        }
+
+        .sidebar-links a:hover {
+            color: #d2e4ea;
+        }
+
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
@@ -29,7 +114,7 @@
         <div class="relative flex items-center justify-between w-full md:w-auto gap-3">
             <div class="flex items-center gap-3">
                 <!-- Botão Menu -->
-                <button class="w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-full flex items-center justify-center text-[#7d487b] shadow-md hover:bg-gray-100 transition cursor-pointer flex-shrink-0 z-10">
+                <button class="w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-full flex items-center justify-center text-[#7d487b] shadow-md hover:bg-gray-100 transition cursor-pointer flex-shrink-0 z-10" id="abrirMenu">
                     <i class="fa-solid fa-bars text-base sm:text-xl"></i>
                 </button>
                 
@@ -100,6 +185,17 @@
             <span id="productCounter" class="text-sm sm:text-base text-gray-600 font-medium">Exibindo produtos disponíveis</span>
         </div>
 
+            <!-- Estrutura da Aba -->
+            <div class="sidebar" id="menuLateral">
+                <button class="btn-fechar" id="fecharMenu">&times;</button>
+                <ul class="sidebar-links">
+                    <li><a href="#">Início</a></li>
+                    <li><a href="#">Catálogo</a></li>
+                    <li><a href="#">Histórico</a></li>
+                    <li><a href="#">Perfil</a></li>
+                </ul>
+            </div>
+
         <!-- Container Dinâmico para produtos -->
         <div id="productContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             <!-- Os cards são gerados via JS -->
@@ -119,6 +215,20 @@
 
     <!-- Script JavaScript -->
     <script>
+         const btnAbrir = document.getElementById('abrirMenu');
+        const btnFechar = document.getElementById('fecharMenu');
+        const menuLateral = document.getElementById('menuLateral');
+
+        // Abre o menu ao adicionar a classe "ativo"
+        btnAbrir.addEventListener('click', () => {
+            menuLateral.classList.add('ativo');
+        });
+
+        // Fecha o menu ao remover a classe "ativo"
+        btnFechar.addEventListener('click', () => {
+            menuLateral.classList.remove('ativo');
+        });
+
         const products = [
             {
                 id: 1,
